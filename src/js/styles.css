@@ -1,0 +1,26 @@
+body{
+background-color: black;
+}
+
+button{
+border-radius: 10px;
+margin-left: 10%;
+color:black;
+background-color: white;
+}
+
+span{
+color: white;
+font-size: xx-large;
+margin-left: 1%;
+margin-right: 2%;
+border: 1px solid white;
+padding: 1%;
+}
+
+.svg-inline--fa{
+font-size: xx-large;
+margin-left: 10%;
+color: white;
+margin-top: 5%;
+}

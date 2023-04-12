@@ -1,12 +1,56 @@
-//import react into the bundle
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import './styles.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock } from '@fortawesome/free-solid-svg-icons';
 
-// include your styles into the webpack bundle
-import "../styles/index.css";
+const SecondsCounter = (props) => {
+  const [seconds, setSeconds] = useState(props.seconds);
+  const [intervalId, setIntervalId] = useState(null);
 
-//import your own components
-import Home from "./component/home.jsx";
+  useEffect(() => {
+    startCounter();
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
-//render your react application
-ReactDOM.render(<Home />, document.querySelector("#app"));
+  const startCounter = () => {
+    const id = setInterval(() => {
+      setSeconds((prevSeconds) => prevSeconds + 1);
+    }, 1000);
+    setIntervalId(id);
+  };
+
+  const stopCounter = () => {
+    clearInterval(intervalId);
+    setIntervalId(null);
+  };
+
+  const resetCounter = () => {
+    setSeconds(0);
+  };
+
+  const resumeCounter = () => {
+    if (!intervalId) {
+      startCounter();
+    }
+  };
+
+  return (
+    <div>
+      <FontAwesomeIcon icon={faClock} />
+      <span>{seconds}</span>
+      <button onClick={stopCounter}>Stop</button>
+      <button onClick={resetCounter}>Reset</button>
+      <button onClick={resumeCounter}>Resume</button>
+    </div>
+  );
+};
+
+window.onload = function () {
+  ReactDOM.render(
+    <SecondsCounter seconds={0} />,
+    document.getElementById('app')
+  );
+};
